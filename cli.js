@@ -8,7 +8,7 @@ let args = process.argv.slice(2);
 const cwd = process.cwd();
 
 const addonDirectory = 'BDS-Addons';
-const requiredFiles = ['bedrock_server', 'behavior_packs', 'resource_packs', 'valid_known_packs.json'];
+const requiredFiles = ['behavior_packs', 'resource_packs', 'valid_known_packs.json'];
 const useExample = ' bds-addon-installer <pathToServer> \n Example: bds-addon-installer "C:\\Program Files\\BedrockServer\\" \n';
 
 console.log('\nRunning Bedrock Dedicated Server Addon Installer...');
