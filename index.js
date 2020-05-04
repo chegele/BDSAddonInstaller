@@ -39,7 +39,7 @@ let installedWorldResources = new Map();
 let installedWorldBehaviors = new Map();
 
 // These files will be validated to confirm the provided serverPath is accurate.
-const requiredFiles = ['bedrock_server', 'behavior_packs', 'resource_packs', 'valid_known_packs.json'];
+const requiredFiles = ['behavior_packs', 'resource_packs', 'valid_known_packs.json'];
 
 export default class BDSAddonInstaller {
 

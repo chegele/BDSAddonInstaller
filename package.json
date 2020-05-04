@@ -1,6 +1,6 @@
 {
   "name": "bds-addon-installer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tool used for automatically installing, updating, and uninstalling both addons and packs for the Mojang released bedrock servers.",
   "main": "index.js",
   "type": "module",
