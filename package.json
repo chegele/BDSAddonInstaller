@@ -1,0 +1,29 @@
+{
+  "name": "bds-addon-installer",
+  "version": "1.0.0",
+  "description": "A tool used for automatically installing, updating, and uninstalling both addons and packs for the Mojang released bedrock servers.",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "bds-addon-installer": "./cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "semantic-release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chegele/BDSAddonInstaller.git"
+  },
+  "author": "Chegele",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chegele/BDSAddonInstaller/issues"
+  },
+  "homepage": "https://github.com/chegele/BDSAddonInstaller#readme",
+  "dependencies": {
+    "adm-zip": "^0.4.14",
+    "fs-extra": "^8.1.0",
+    "simple-logger": "git+https://github.com/chegele/Logger.git"
+  }
+}
