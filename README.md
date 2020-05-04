@@ -36,7 +36,7 @@ For help reach out on discord @ http://discord.BedrockRealms.com
     - -v - *Enables verbose mode which will log additional details as the script runs.*
 
 #### Notes
- - There are two types of files that this tool can work with. Minecraft packs(.mcpack) which are individual resources, and Minecraft Addons(.mcaddon) which are collections of multiple packs. Minecraft packs be installed without being altered but the .mcaddon files will be converted into the individual packs it contains before being installed.
+ - There are two types of files that this tool can work with. Minecraft packs(.mcpack) which are individual resources, and Minecraft Addons(.mcaddon) which are collections of multiple packs. Minecraft packs will be installed without being altered but the .mcaddon files will be converted into the individual packs it contains before being installed.
     - mySpecialAddon.mcaddon - Converts to ->
         - mySpecialAddon_resource.mcpack
         - mySpecialAddon_behavior.mcpack
