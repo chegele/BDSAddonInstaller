@@ -121,7 +121,15 @@ export default class BDSAddonInstaller {
         let name = manifest.header.name.replace(/\W/g, '');
         let uuid = manifest.header.uuid;
         let version = manifest.header.version;
-        let type = manifest.modules[0].type.toLowerCase();
+        if (!version) version = manifest.header.modules[0].version;
+        let type;
+        if (manifest.modules) {
+            type = manifest.modules[0].type.toLowerCase();
+        } else if (manifest.header.modules) {
+            type = manifest.header.modules[0].type.toLowerCase();
+        }else {
+            throw new Error('Unable to install pack. Unknown pack manifest format.\n' + packPath);
+        }
 
         log.general('BDSAddonInstaller - Installing ' + name + '...');
 
@@ -204,7 +212,15 @@ async function installPack(packPath, manifest) {
     let name = manifest.header.name.replace(/\W/g, '');
     let uuid = manifest.header.uuid;
     let version = manifest.header.version;
-    let type = manifest.modules[0].type.toLowerCase();
+    if (!version) version = manifest.header.modules[0].version;
+    let type;
+    if (manifest.modules) {
+        type = manifest.modules[0].type.toLowerCase();
+    } else if (manifest.header.modules) {
+        type = manifest.header.modules[0].type.toLowerCase();
+    }else {
+        throw new Error('Unable to install pack. Unknown pack manifest format.\n' + packPath);
+    }
 
     // Create placeholder variables for pack installation paths. 
     let installServerPath, installWorldPath, WorldPacksJSON, WorldPacksPath, rawPath = null;
@@ -475,6 +491,7 @@ function mapInstalledPacks(directory) {
         let uuid = manifest.header.uuid;
         let name = manifest.header.name;
         let version = manifest.header.version;
+        if (!version) version = manifest.header.modules[0].version;
         results.set(uuid, {name, uuid, version, location}); 
     });
     return results;
