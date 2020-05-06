@@ -2,7 +2,7 @@
 import path from 'path';
 import admZip from 'adm-zip';
 import fs from 'fs-extra';
-import Logger from 'simple-logger';
+import Logger from 'chegs-simple-logger';
 
 let log = new Logger({});
 log.logGeneral = true;

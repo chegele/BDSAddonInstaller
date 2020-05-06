@@ -49,7 +49,7 @@ For help reach out on discord @ http://discord.BedrockRealms.com
 
 #### Notes
  - This is a ECMAScript module which makes use of import and export statements.
- - This module uses simple-logger (https://github.com/chegele/Logger).
+ - This module uses chegs-simple-logger (https://github.com/chegele/Logger).
  - Install the module locally if you will be using it programmatically. 
     - npm install bds-addon-installer --save
  - You will need to manually create a BDS-Addons folder at the root of the server.
