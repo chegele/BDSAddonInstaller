@@ -430,7 +430,7 @@ function extractPackManifest(packPath) {
 
     // Locate the manifest file in the zipped pack.
     let archive = new admZip(packPath);
-    let manifest = archive.getEntries().filter(entry => entry.entryName == 'manifest.json' || entry.entryName == 'pack_manifest.json');
+    let manifest = archive.getEntries().filter(entry => entry.entryName.endsWith('manifest.json') || entry.entryName.endsWith('pack_manifest.json'));
     if (!manifest[0]) throw new Error('Unable to extract manifest file. It does not exist in this pack. ' + packPath);
     
     // Read the manifest and return the parsed JSON.
@@ -478,9 +478,18 @@ function mapInstalledPacks(directory) {
         let location = path.join(directory, subdirectory);
         log.detail('BDSAddonInstaller - Reading manifest data from ' + location);
 
+        // Locate the directory containing the pack manifest.
+        let manifestLocation = findFilesSync(['manifest.json', 'pack_manifest.json'], location);
+        if (!manifestLocation) {
+            log.error(manifestLocation);
+            log.warning('BDSAddonInstaller - Unable to locate manifest file of installed pack.');
+            log.warning('BDSAddonInstaller - Installed location: ' + location);
+            return;
+        }
+
         // Check if pack is using a manifest.json or pack.manifest.json
-        let filePath = path.join(location, 'manifest.json');
-        if (!fs.existsSync(filePath)) filePath = path.join(location, 'pack_manifest.json');
+        let filePath = path.join(manifestLocation, 'manifest.json');
+        if (!fs.existsSync(filePath)) filePath = path.join(manifestLocation, 'pack_manifest.json');
         let file = fs.readFileSync(filePath);
 
         // Some vanilla packs have comments in them, this is not valid JSON and needs to be removed.
@@ -549,6 +558,35 @@ function promiseZip(folder, destinationFile) {
         });
     });
 }
+
+/**
+ * Attempt to locate the subdirectory containing one of the provided file names. 
+ * @param {String[]} filenames - The name of files to search for.
+ * @param {String} directory - The directory to search in.
+ * @returns {String} The path to the first folder containing one of the files or null.
+ */
+function findFilesSync(filenames, directory) {
+
+    // Get the contents of the directory and see if it includes one of the files.
+    const contents = fs.readdirSync(directory);
+    for (let file of contents) {
+        if (filenames.includes(file)) return directory;
+    }
+
+    // If unable to find one of the files, check subdirectories. 
+    for (let subDir of contents) {
+        let dirPath = path.join(directory, subDir);
+        let stat = fs.statSync(dirPath);
+        if (stat.isDirectory()) {
+            let subDirectoryResult = findFilesSync(filenames, dirPath);
+            if (subDirectoryResult) return subDirectoryResult;
+        }
+    }
+
+    // Unable to find the files. 
+    return null;
+}
+
 
 //TODO: Add type definitions for the manifest files. 
 
