@@ -493,7 +493,7 @@ function mapInstalledPacks(directory) {
         let file = fs.readFileSync(filePath);
 
         // Some vanilla packs have comments in them, this is not valid JSON and needs to be removed.
-        file = file.toString().replace(/\/\/.*/g, '');
+        file = file.toString().replace(/\\"|"(?:\\"|[^"])*"|(\/\/.*|\/\*[\s\S]*?\*\/)/g, (m, g) => g ? "" : m);
         let manifest = JSON.parse(file);
 
         // Collect and map the manifest information
