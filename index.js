@@ -3,6 +3,7 @@ import path from 'path';
 import admZip from 'adm-zip';
 import fs from 'fs-extra';
 import Logger from 'chegs-simple-logger';
+import stripJsonComments from 'strip-json-comments';
 
 let log = new Logger({});
 log.logGeneral = true;
@@ -434,7 +435,7 @@ function extractPackManifest(packPath) {
     if (!manifest[0]) throw new Error('Unable to extract manifest file. It does not exist in this pack. ' + packPath);
     
     // Read the manifest and return the parsed JSON.
-    return JSON.parse(archive.readAsText(manifest[0].entryName));
+    return JSON.parse(stripJsonComments(archive.readAsText(manifest[0].entryName)));
 }
 
 
@@ -493,7 +494,7 @@ function mapInstalledPacks(directory) {
         let file = fs.readFileSync(filePath);
 
         // Some vanilla packs have comments in them, this is not valid JSON and needs to be removed.
-        file = file.toString().replace(/\/\/.*/g, '');
+        file = stripJsonComments(file.toString());
         let manifest = JSON.parse(file);
 
         // Collect and map the manifest information
